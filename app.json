@@ -1,5 +1,6 @@
 {
   "expo": {
+    "scheme": "mycoolredirect",
     "name": "fsstockApp",
     "slug": "fsstockApp",
     "version": "1.0.0",
@@ -11,18 +12,43 @@
       "resizeMode": "contain",
       "backgroundColor": "#ffffff"
     },
-    "assetBundlePatterns": [
-      "**/*"
-    ],
+    "assetBundlePatterns": ["**/*"],
     "ios": {
       "supportsTablet": true
     },
     "android": {
+      "enableHermes": true,
       "adaptiveIcon": {
         "foregroundImage": "./assets/adaptive-icon.png",
         "backgroundColor": "#ffffff"
       },
-      "package": "com.kent2980.fsstockApp"
+      "package": "com.kent2980.fsstockapp",
+      "useNextNotificationsApi": true,
+      "useNextCameraApi": true,
+      "plugins": [
+        [
+          "expo-module-scripts",
+          {
+            "moduleName": "@react-native-masked-view/masked-view",
+            "ios": {
+              "script": "node_modules/@react-native-masked-view/masked-view/scripts/patch-react-native.js",
+              "plist": [
+                {
+                  "NSCameraUsageDescription": {
+                    "string": "This app uses the camera for taking pictures to share with friends and family."
+                  }
+                }
+              ]
+            },
+            "android": {
+              "script": "node_modules/@react-native-masked-view/masked-view/scripts/patch-react-native.js",
+              "manifest": {
+                "permissions": ["CAMERA"]
+              }
+            }
+          }
+        ]
+      ]
     },
     "web": {
       "favicon": "./assets/favicon.png"

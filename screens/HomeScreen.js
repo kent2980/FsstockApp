@@ -1,22 +1,25 @@
-import React, { useContext } from 'react';
-import { View, Text, StyleSheet } from 'react-native';
-import GoogleLoginButton from '../components/buttons/GoogleLoginButton';
-import AuthContext from '../contexts/AuthContext';
+import React, { useContext } from "react";
+import { View, StyleSheet, TouchableOpacity, Text } from "react-native";
+import AuthContext from "../contexts/AuthContext";
+import GoogleLoginButton from "../components/buttons/GoogleLoginButton";
 
-const HomeScreen = () => {
-  const { token, setToken, user, setUser } = useContext(AuthContext);
+const HomeScreen = ({ navigation }) => {
+  const { googleToken } = useContext(AuthContext);
 
   return (
     <View style={styles.container}>
-      {token.accessToken ? (
+      {googleToken ? (
         <View>
-          <Text>Welcome, {user && user.name}!</Text>
-          <Text>Email: {user && user.email}</Text>
-          <Text>User ID: {user && user.id}</Text>
+          <TouchableOpacity
+            onPress={() => navigation.navigate("UserProfile")}
+            style={styles.profileButton}
+          >
+            <Text style={styles.profileButtonText}>User Profile</Text>
+          </TouchableOpacity>
         </View>
       ) : (
         <View>
-        <Text>Soon</Text>
+          <GoogleLoginButton />
         </View>
       )}
     </View>
@@ -26,8 +29,18 @@ const HomeScreen = () => {
 const styles = StyleSheet.create({
   container: {
     flex: 1,
-    justifyContent: 'center',
-    alignItems: 'center',
+    justifyContent: "center",
+    alignItems: "center",
+  },
+  profileButton: {
+    paddingHorizontal: 40,
+    paddingVertical: 10,
+    borderRadius: 5,
+    backgroundColor: '#2196F3', // ボタンの背景色を設定
+  },
+  profileButtonText: {
+    fontSize: 18, // フォントサイズを18に変更
+    color: '#FFF', // テキストの色を設定
   },
 });
 
