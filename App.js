@@ -9,7 +9,9 @@ import {
 import HomeScreen from "./screens/HomeScreen";
 import AuthContext from "./contexts/AuthContext";
 import UserIcon from "./components/user/UserIcon";
-import UserProfileScreen from "./screens/userProfile/UserProfileScreen";
+import UserProfileScreen from "./screens/user/UserProfileScreen";
+import UserSettingsScreen from "./screens/settings/UserSettingsScreen";
+import UserLoginScreen from "./screens/user/UserLoginScreen";
 
 const Stack = createStackNavigator();
 
@@ -19,36 +21,35 @@ const App = () => {
 
   function MyStackNavigator() {
     return (
-      <Stack.Navigator
-        mode="modal"
-        screenOptions={{
-          ...TransitionPresets.SlideFromRightIOS,
-          headerStyle: {
-            backgroundColor: "#fff",
-            height:
-              Platform.OS === "android" ? 50 + StatusBar.currentHeight : 50,
-            paddingTop: Platform.OS === "android" ? StatusBar.currentHeight : 0,
-          },
-          headerTintColor: "#000",
-          headerTitleStyle: {
-            fontWeight: "bold",
-          },
-          headerRight: () => <UserIcon />, // userInfoをUserIconに渡す
-          cardStyleInterpolator: CardStyleInterpolators.forVerticalIOS,
-        }}
-      >
-        <Stack.Screen name="Home" component={HomeScreen} />
-        <Stack.Screen
-          name="UserProfile"
-          component={UserProfileScreen}
-          options={{
-            cardStyleInterpolator:
-              CardStyleInterpolators.forModalPresentationIOS,
-            cardStyle: { backgroundColor: "rgba(0,0,0,0.5)" },
-            headerShown: false,
+      <>
+        <StatusBar backgroundColor="#fff" barStyle="dark-content" />
+        <Stack.Navigator
+          mode="modal"
+          screenOptions={{
+            ...TransitionPresets.ScaleFromCenterAndroid,
+            headerStyle: {
+              backgroundColor: "#fff",
+              height: 50,
+            },
+            headerTintColor: "#000",
+            headerTitleStyle: {
+              fontWeight: "bold",
+            },
+            headerRight: () => <UserIcon />, // userInfoをUserIconに渡す
           }}
-        />
-      </Stack.Navigator>
+        >
+          <Stack.Screen name="Home" component={HomeScreen} />
+          <Stack.Screen
+            name="UserProfile"
+            component={UserProfileScreen}
+            options={{
+              cardStyle: { backgroundColor: "rgba(0,0,0,0.5)" },
+            }}
+          />
+          <Stack.Screen name="UserSetting" component={UserSettingsScreen} />
+          <Stack.Screen name="UserLogin" component={UserLoginScreen}/>
+        </Stack.Navigator>
+      </>
     );
   }
 

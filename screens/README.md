@@ -12,7 +12,7 @@
 - `settings`: ユーザー設定に関連する画面が含まれており、UserSettingsScreenとOtherSettingsScreenが含まれています。
   - `UserSettingsScreen.js`: ユーザー設定を表示・編集する画面です。
   - `OtherSettingsScreen.js`: その他の設定を表示・編集する画面です。
-- `userProfile`: ユーザー情報を表示するUserProfileScreenが含まれています。
+- `user`: ユーザー情報を表示するUserProfileScreenが含まれています。
   - `UserProfileScreen.js`: ユーザーのプロフィール情報を表示する画面です。
 - `timeline`: 無限スクロールタイムラインで財務諸表を表示するTimelineScreenが含まれています。
   - `TimelineScreen.js`: 日付ごとの財務諸表を無限スクロールで表示するタイムライン画面です。

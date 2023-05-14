@@ -8,6 +8,9 @@
       "distribution": "internal",
       "ios": {
         "resourceClass": "m-medium"
+      },
+      "env": {
+        "ENVIRONMENT": "dev"
       }
     },
     "preview": {
@@ -17,11 +20,17 @@
       },
       "android": {
         "buildType": "apk"
+      },
+      "env": {
+        "ENVIRONMENT": "staging"
       }
     },
     "production": {
       "ios": {
         "resourceClass": "m-medium"
+      },
+      "env": {
+        "ENVIRONMENT": "production"
       }
     }
   },
