@@ -1,10 +1,9 @@
 import React, { useState } from "react";
-import { StatusBar, Platform, View } from "react-native";
-import { NavigationContainer } from "@react-navigation/native";
+import { StatusBar, TouchableOpacity } from "react-native";
+import { NavigationContainer, useNavigation } from "@react-navigation/native";
 import {
   createStackNavigator,
   TransitionPresets,
-  CardStyleInterpolators,
 } from "@react-navigation/stack";
 import HomeScreen from "./screens/HomeScreen";
 import AuthContext from "./contexts/AuthContext";
@@ -16,15 +15,18 @@ import UserLoginScreen from "./screens/user/UserLoginScreen";
 const Stack = createStackNavigator();
 
 const App = () => {
-  const [googleToken, setGoogleToken] = useState("");
+  const [backendToken, setBackendToken] = useState({
+    accessToken: "",
+    refreshToken: "",
+  });
   const [userInfo, setUserInfo] = useState(null);
 
   function MyStackNavigator() {
+    const navigation = useNavigation();
     return (
       <>
         <StatusBar backgroundColor="#fff" barStyle="dark-content" />
         <Stack.Navigator
-          mode="modal"
           screenOptions={{
             ...TransitionPresets.ScaleFromCenterAndroid,
             headerStyle: {
@@ -35,19 +37,38 @@ const App = () => {
             headerTitleStyle: {
               fontWeight: "bold",
             },
-            headerRight: () => <UserIcon />, // userInfoをUserIconに渡す
+            presentation: "modal",
+            headerRight: () => (
+              <TouchableOpacity
+                onPress={() => {
+                  navigation.navigate("UserProfile");
+                }}
+              >
+                <UserIcon />
+              </TouchableOpacity>
+            ),
           }}
         >
-          <Stack.Screen name="Home" component={HomeScreen} />
+          <Stack.Screen
+            name="Home"
+            component={HomeScreen}
+            options={{ title: "Home" }}
+          />
           <Stack.Screen
             name="UserProfile"
             component={UserProfileScreen}
-            options={{
-              cardStyle: { backgroundColor: "rgba(0,0,0,0.5)" },
-            }}
+            options={{ title: "Profile" }}
           />
-          <Stack.Screen name="UserSetting" component={UserSettingsScreen} />
-          <Stack.Screen name="UserLogin" component={UserLoginScreen}/>
+          <Stack.Screen
+            name="UserSetting"
+            component={UserSettingsScreen}
+            options={{ title: "Settings" }}
+          />
+          <Stack.Screen
+            name="UserLogin"
+            component={UserLoginScreen}
+            options={{ title: "Login" }}
+          />
         </Stack.Navigator>
       </>
     );
@@ -55,7 +76,12 @@ const App = () => {
 
   return (
     <AuthContext.Provider
-      value={{ googleToken, setGoogleToken, userInfo, setUserInfo }}
+      value={{
+        userInfo,
+        setUserInfo,
+        backendToken,
+        setBackendToken,
+      }}
     >
       <NavigationContainer>
         <MyStackNavigator />

@@ -3,27 +3,15 @@ import { View, StyleSheet, TouchableOpacity, Text } from "react-native";
 import AuthContext from "../contexts/AuthContext";
 import UserLoginScreen from "./user/UserLoginScreen";
 
-// AuthContextからgoogleTokenを取得し、ログイン状態に応じて表示内容を変える
+// AuthContextからbackendTokenを取得し、ログイン状態に応じて表示内容を変える
 const HomeScreen = ({ navigation }) => {
-  const { googleToken } = useContext(AuthContext);
+  const { backendToken } = useContext(AuthContext);
 
   return (
     <View style={styles.container} testID="pageView">
-      {googleToken ? (
+      {backendToken.accessToken ? (
         // ログインしている場合はユーザープロフィールと設定画面へのリンクを表示
         <View testID="mainView">
-          <TouchableOpacity
-            onPress={() => navigation.navigate("UserProfile")}
-            style={styles.profileButton}
-          >
-            <Text style={styles.profileButtonText}>User Profile</Text>
-          </TouchableOpacity>
-          <TouchableOpacity
-            onPress={() => navigation.navigate("UserSetting")}
-            style={styles.profileButton}
-          >
-            <Text style={styles.profileButtonText}>UserSetting</Text>
-          </TouchableOpacity>
         </View>
       ) : (
         // ログインしていない場合はGoogleログインボタンを表示

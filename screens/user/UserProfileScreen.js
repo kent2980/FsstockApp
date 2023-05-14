@@ -7,11 +7,14 @@ import { TouchableWithoutFeedback } from "react-native-gesture-handler";
 
 const UserProfileScreen = () => {
   const navigation = useNavigation();
-  const { userInfo, setUserInfo, setGoogleToken } = useContext(AuthContext);
+  const { userInfo, setUserInfo, setBackendToken } = useContext(AuthContext);
 
   const handleLogout = () => {
     // ログアウト処理を実装
-    setGoogleToken(null);
+    setBackendToken({
+      accessToken: "",
+      refreshToken: "",
+    });
     setUserInfo(null);
 
     // HomeScreenに遷移
@@ -38,6 +41,12 @@ const UserProfileScreen = () => {
           <UserIcon userInfo={userInfo} />
           <Text style={styles.name}>{userInfo?.name}</Text>
           <Text style={styles.email}>{userInfo?.email}</Text>
+          <TouchableOpacity
+            onPress={() => navigation.navigate("UserSetting")}
+            style={styles.UserSettingButton}
+          >
+            <Text style={styles.UserSettingButtonText}>UserSetting</Text>
+          </TouchableOpacity>
           <TouchableOpacity style={styles.logoutButton} onPress={handleLogout}>
             <Text style={styles.logoutButtonText}>Logout</Text>
           </TouchableOpacity>
@@ -71,6 +80,7 @@ const styles = StyleSheet.create({
     marginTop: 5,
   },
   logoutButton: {
+    width: 200,
     backgroundColor: "#f4511e",
     paddingHorizontal: 20,
     paddingVertical: 10,
@@ -80,6 +90,20 @@ const styles = StyleSheet.create({
   logoutButtonText: {
     color: "#fff",
     fontSize: 18,
+    marginHorizontal: "auto",
+  },
+  UserSettingButton: {
+    width: 200,
+    paddingHorizontal: 40,
+    paddingVertical: 10,
+    borderRadius: 5,
+    backgroundColor: "#2196F3", // ボタンの背景色を設定
+    marginTop: 20,
+  },
+  UserSettingButtonText: {
+    fontSize: 18, // フォントサイズを18に変更
+    color: "#FFF", // テキストの色を設定
+    marginHorizontal: "auto",
   },
 });
 
